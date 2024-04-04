@@ -24,7 +24,19 @@ module "web"  {
   vpc_id = module.vpc.vpc_id
   web_subnet_id = module.subnet.web_subnets_id
   lb_subnets     = module.subnet.web_subnets_id
-  # not configured yet 
-  # priv_lb_dns = 
+  app_lb_dns = module.app.app_lb_dns
 
+}
+
+module "app" {
+  source = "./modules/app"
+  app_subnet_id = module.subnet.app_subnets_id
+  vpc_id            = module.vpc.vpc_id
+  image_id          = var.image_id
+  instance_type     = var.instance_type
+  key_name          = var.key_name
+  min_size          = var.min_size
+  max_size          = var.max_size
+  desired_capacity  = var.desired_capacity
+  lb_subnets     = module.subnet.web_subnets_id
 }
