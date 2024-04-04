@@ -1,5 +1,6 @@
+# ID of the vpc in where the subnets will be
 variable "vpc_id"{
-    description = "ID of the vpc in where the subnets will be"
+
     type        = string
 }
 
@@ -10,9 +11,8 @@ variable "web_subnets"{
     availability_zone = string
   }))
 }
-
+# ID of the IGW to be used in route table for public subnets
 variable "igw_id"{
-    description = "ID of the IGW to be used in route table for public subnets"
     type = string
 }
 

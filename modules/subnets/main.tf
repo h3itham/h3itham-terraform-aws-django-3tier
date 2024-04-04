@@ -1,4 +1,4 @@
-# CREATE WEB SUBNETS
+# create web subnets
 resource "aws_subnet" "web_subnets" {
   count             = length(var.web_subnets)
   vpc_id            = var.vpc_id

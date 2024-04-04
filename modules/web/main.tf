@@ -46,13 +46,21 @@ sudo apt-get update
 sudo apt-get install -y nginx
 sudo systemctl start nginx
 sudo systemctl enable nginx
+sudo cat > /etc/nginx/sites-enabled/default << EOL
+server {
+    listen 80 default_server;
+    location / {
+      proxy_pass http://${var.app_lb_dns};
+    }
+}
+  
+EOL
 sudo systemctl restart nginx
 EOF
 
 }
 
-## External load balancer 
-# web load balancer 
+# WEB LOAD BALANCER 
 resource "aws_lb" "web-LB" {
 
     name              = "web-LB"
@@ -60,21 +68,13 @@ resource "aws_lb" "web-LB" {
     subnets           = var.lb_subnets
     security_groups   = [aws_security_group.web-SG.id]
 }
-# target group 
+# TARGET GROUP 
 resource "aws_lb_target_group" "web-TG" {
 	name     = "web-TG"
 	port 	 = 80 
 	protocol = "HTTP"
 	vpc_id   = var.vpc_id
-	health_check {
-		path 		= "/"
-		protocol	= "HTTP"
-		matcher     = "200"
-		interval    = 15
-		timeout     = 3
-        healthy_threshold = 2
-		unhealthy_threshold = 2
-	}
+	
 }
 
 # ATTACHE TARGET GROUP TO WEB-NGINX SUBNETS
@@ -85,7 +85,7 @@ resource "aws_lb_target_group_attachment" "web-target-group-attachment" {
     port             = 80
 
 }
-# web listener 
+# WEB LISTENER 
 resource "aws_lb_listener" "web-listner" {
     load_balancer_arn = aws_lb.web-LB.arn
     port              = "80"
