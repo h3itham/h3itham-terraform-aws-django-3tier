@@ -27,3 +27,11 @@ db_subnets = [
     { subnets_cidr      = "10.0.6.0/24"
      availability_zone  = "us-east-1b" }
 ]
+
+# Auto scaling module values 
+image_id          = "ami-080e1f13689e07408"
+instance_type     = "t2.micro"
+key_name          = "haitham"
+min_size          = 2
+desired_capacity  = 2
+max_size          = 4
