@@ -53,7 +53,6 @@ server {
       proxy_pass http://${var.app_lb_dns};
     }
 }
-  
 EOL
 sudo systemctl restart nginx
 EOF

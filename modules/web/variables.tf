@@ -2,8 +2,6 @@
 variable "vpc_id"{
   type = string
 }
-
-
 # LIST OF  PUBLIC SUBNETS , LIST OF PRIVATE SUBNETS
 variable "lb_subnets"{
     type = list(string)
@@ -12,6 +10,5 @@ variable "lb_subnets"{
 variable "web_subnet_id" {
   type = list
 }
-
 # vARIABLE USED IN NGINX SCRIPT TO PROXY TO THE PRIVATE LOAD BALANCER
 variable "app_lb_dns" {} 
