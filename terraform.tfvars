@@ -35,3 +35,9 @@ key_name          = "haitham"
 min_size          = 2
 desired_capacity  = 2
 max_size          = 4
+
+# Database Module 
+dbname = "test"
+dbusername = "haitham"
+dbpassword = "Haithamelabd"
+
