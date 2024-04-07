@@ -40,30 +40,35 @@ resource "aws_launch_configuration" "django-LC" {
               #!/bin/bash
               sudo apt update
               sudo apt install -y python3-pip > /dev/null 2>&1
+              sudo apt install python3-dev default-libmysqlclient-dev build-essential pkg-config -y > /dev/null 2>&1
               git clone https://github.com/h3itham/SimpleDjangoApp.git /home/ubuntu/project
               cd /home/ubuntu/project/
               sudo pip3 install -r requirements.txt
+              sed -i 's/database_name/${var.dbname}/g' config/settings.py
+              sed -i 's/database_username/${var.dbusername}/g' config/settings.py
+              sed -i 's/database_password/${var.dbpassword}/g' config/settings.py
+              sed -i 's/database_host/${var.dbhost}/g' config/settings.py
               sudo python3 manage.py migrate
               sudo nohup python3 manage.py runserver 0.0.0.0:80 &
               EOF
    
+   
 }
 
 # AUTO SCALING GROUP FOR DJANGO APPLICATION 
-resource "aws_autoscaling_group" "django-ASG" {
-  count                    = length(var.app_subnet_id) 
-  name                     = "django-ASG"
-  launch_configuration     = aws_launch_configuration.django-LC.name
-  min_size                 = var.min_size
-  max_size                 = var.max_size
-  desired_capacity         = var.desired_capacity 
-  vpc_zone_identifier      = toset([var.app_subnet_id[count.index]])
-  target_group_arns        = [aws_lb_target_group.app-TG.arn]
-  health_check_type        = "ELB"
+resource "aws_autoscaling_group" "Django-ASG" { 
+  name                      = "Django-ASG"
+  launch_configuration      = aws_launch_configuration.django-LC.name
+  min_size                  = var.min_size
+  max_size                  = var.max_size
+  desired_capacity          = var.desired_capacity 
+  vpc_zone_identifier       = [var.app_subnet_1_id, var.app_subnet_2_id]
+  target_group_arns         = [aws_lb_target_group.app-TG.arn]
+  health_check_type         = "ELB"
   health_check_grace_period = 300 
    tag {
-    key                 = "foo"
-    value               = "bar"
+    key                 = "Name"
+    value               = "app"
     propagate_at_launch = true
   }
 }
