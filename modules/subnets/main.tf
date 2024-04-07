@@ -1,4 +1,4 @@
-# create web subnets
+# CREATE WEB SUBNETS
 resource "aws_subnet" "web_subnets" {
   count             = length(var.web_subnets)
   vpc_id            = var.vpc_id
@@ -8,7 +8,6 @@ resource "aws_subnet" "web_subnets" {
     Name = "web_subnet_${count.index}"
   }
 }
-
 # CREATE PUBLIC ROUTE TABLE 
 resource "aws_route_table" "public-rt" {
   vpc_id = var.vpc_id
@@ -50,8 +49,6 @@ resource "aws_route_table_association" "private-rta" {
   subnet_id      = aws_subnet.app_subnets[count.index].id   
   route_table_id = aws_route_table.private-rt.id
 }
-
-
 # CREATE DB SUBNETS
 resource "aws_subnet" "db_subnets" {
   count             = length(var.db_subnets)
@@ -69,5 +66,3 @@ resource "aws_route_table_association" "db-rta" {
   subnet_id      = aws_subnet.db_subnets[count.index].id   
   route_table_id = aws_route_table.private-rt.id
 }
-
-

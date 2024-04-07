@@ -3,36 +3,33 @@ variable "vpc_id"{
 
     type        = string
 }
-
+# WEB sUBNETES INFO
 variable "web_subnets"{
-  description = "web subnets info"
   type        = list(object({
     subnets_cidr      = string
     availability_zone = string
   }))
 }
-# ID of the IGW to be used in route table for public subnets
+# APP SUBNETS INFO
+variable "app_subnets"{
+  type = list(object({
+    subnets_cidr = string
+    availability_zone = string
+  }))
+}
+# DB SUBNETS INFO
+variable "db_subnets"{
+  type = list(object({
+    subnets_cidr = string
+    availability_zone = string
+  }))
+}
+# ID OF THE IGW TO BE USED IN ROUTE TABLE FOR PUBLIC SUBNETS
 variable "igw_id"{
     type = string
 }
-
-variable "app_subnets"{
-description = "app subnets info"
-  type = list(object({
-    subnets_cidr = string
-    availability_zone = string
-  }))
-}
-
-variable "db_subnets"{
-description = "db subnets info"
-  type = list(object({
-    subnets_cidr = string
-    availability_zone = string
-  }))
-}
-
+# ID OF THE NAT TO BE USED IN ROUTE TABLE FOR PRIVATE SUBNETS 
 variable "nat_id"{
-    description = "ID of the NAT to be used in route table for private subnets"
+    description = ""
     type = string
 }
