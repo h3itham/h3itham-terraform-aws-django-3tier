@@ -58,3 +58,14 @@ variable "desired_capacity" {
   description = "Desired number of instances in the Auto Scaling Group"
   type        = number
 }
+
+variable "dbname" {
+  type = string
+}
+variable "dbusername" {
+  type = string 
+}
+
+variable "dbpassword" {
+  type = string 
+}
