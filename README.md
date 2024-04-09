@@ -29,8 +29,11 @@ In the Database tier, we will have another layer of private subnets  hosting a M
 ### Deployment Instructions
 
 1. Clone The Repository
+    ````bash 
+   git clone https://github.com/h3itham/terraform-aws-django-3tier.git
+   ````
 
-2. Initialize Terrafrom. 
+3. Initialize Terrafrom. 
    **Note** before run this command you should create or add your backend state file or simply delete my state file `remote_backend.tf` 
 
    ````bash 
@@ -38,21 +41,21 @@ In the Database tier, we will have another layer of private subnets  hosting a M
    terrafrom init 
    ````
 
-3. Customize your variables in `terrafrom.tfvars` file,  according to your specific needs
+4. Customize your variables in `terrafrom.tfvars` file,  according to your specific needs
 
-4. Review Terraform plan 
+5. Review Terraform plan 
 
    ````bash 
    terrafrom plan
    ````
 
-5. Apply terrafrom changes 
+6. Apply terrafrom changes 
 
    `````bash 
    terrafrom apply
    `````
 
-6. Finally Don't forget to destroy your infra. 
+7. Finally Don't forget to destroy your infra. 
 
    `````bash 
    terrafrom destroy 
